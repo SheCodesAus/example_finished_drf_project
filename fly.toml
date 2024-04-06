@@ -1,13 +1,19 @@
-# fly.toml file generated for solitary-glitter-2281 on 2023-04-05T09:29:24+10:00
+# fly.toml app configuration file generated for example-finished-drf-project on 2024-04-06T12:32:36+10:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "solitary-glitter-2281"
+app = 'example-finished-drf-project'
+primary_region = 'syd'
+console_command = '/code/manage.py shell'
 kill_signal = "SIGINT"
 kill_timeout = 5
-primary_region = "syd"
 processes = []
 
+[build]
+
 [env]
-  PORT = "8000"
+  PORT = '8000'
 
 [experimental]
   auto_rollback = true
@@ -39,8 +45,9 @@ processes = []
     timeout = "2s"
 
 [[statics]]
-  guest_path = "/code/static"
+  guest_path = "/app/public"
   url_prefix = "/static/"
+
 [mounts]
-    source = "dbvol"
-    destination = "/dbvol"
+  source = "dbvol"
+  destination = "/dbvol"
