@@ -1,39 +1,58 @@
 from rest_framework import serializers
-from .models import Project, Pledge
+from .models import Exam, ExamResult, TutorProject, TutorPledge
 
 
-class PledgeSerializer(serializers.ModelSerializer):
+class TutorPledgeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pledge
-        fields = ['id', 'amount', 'comment', 'anonymous', 'project', 'supporter']
-        read_only_fields = ['id', 'supporter']
+        model = TutorPledge
+        fields = ['id', 'hours_pledged', 'comment', 'pledged_to', 'pledged_by']
+        read_only_fields = ['id', 'pledged_by']
 
     def create(self, validated_data):
-        return Pledge.objects.create(**validated_data)
+        return TutorPledge.objects.create(**validated_data)
 
-class ProjectSerializer(serializers.Serializer):
+class TutorProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    title = serializers.CharField(max_length=200)
+    name = serializers.CharField(max_length=200)
+    created_by = serializers.ReadOnlyField(source='created_by.id')
+    tutor_for = serializers.ReadOnlyField(source='tutor_for.id')
     description = serializers.CharField(max_length=None)
-    goal = serializers.IntegerField()
     image = serializers.URLField()
+    required_grade = serializers.FloatField()
+    required_tutoring_hours = serializers.IntegerField()
     is_open = serializers.BooleanField()
-    date_created = serializers.DateTimeField(read_only=True)
-    owner = serializers.ReadOnlyField(source='owner.id')
+    created_date = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
-        return Project.objects.create(**validated_data)
+        return TutorProject.objects.create(**validated_data)
 
-class ProjectDetailSerializer(ProjectSerializer):
-    pledges = PledgeSerializer(many=True, read_only=True)
+class TutorProjectDetailSerializer(TutorProjectSerializer):
+    pledges = TutorPledgeSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
+        instance.name = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
-        instance.goal = validated_data.get('goal', instance.goal)
         instance.image = validated_data.get('image', instance.image)
+        instance.required_grade = validated_data.get('required_grade', instance.required_grade)
+        instance.required_tutoring_hours = validated_data.get('required_tutoring_hours', instance.required_tutoring_hours)
         instance.is_open = validated_data.get('is_open', instance.is_open)
-        instance.date_created = validated_data.get('date_created', instance.date_created)
-        instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
+    
+class ExamResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExamResult
+        fields = ['id', 'examinee', 'exam', 'score', 'date_recorded']
+        read_only_fields = ['id', 'examinee', 'exam', 'score', 'date_recorded']
+
+    def create(self, validated_data):
+        return ExamResult.objects.create(**validated_data)
+    
+class ExamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exam
+        fields = ['id', 'name', 'created_by', 'created_date']
+        read_only_fields = ['id', 'name', 'created_by', 'created_date']
+
+    def create(self, validated_data):
+        return Exam.objects.create(**validated_data)
