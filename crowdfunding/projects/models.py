@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Exam(models.Model):
-    name=models.CharField(max_length=200)
+    name=models.CharField(max_length=200, unique=True)
     created_by=models.ForeignKey(
         User,
         on_delete=models.CASCADE,
