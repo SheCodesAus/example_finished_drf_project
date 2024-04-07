@@ -43,6 +43,7 @@ Educators advertise upcoming exams (i.e., projects) that they need tutors for. E
 ![](./readme_images/ERD.drawio.png)
 
 ## API Spec
+> Scroll sideways to see the whole table!
 
 | URL                          | HTTP Method | Purpose                                                                                                                                                                                          | Request Body                                                                                                                                                                         | Success Response Code | Authentication/Authorisation                                                                                                                                        | Complete |
 | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -74,7 +75,7 @@ I used manual testing here. That means I just went through and created a test in
 - [Automated Testing in Django](https://docs.djangoproject.com/en/5.0/topics/testing/overview/)
 - [Automated Testing in DRF](https://www.django-rest-framework.org/api-guide/testing/)
 
-
+> Scroll sideways to see the whole table!
 
 | Endpoint                     | Action                                                            | JSON                                                                                                                                                                                                                          | Expected Result                                                                          | Expected Code | Success |
 | ---------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------- | ------- |
