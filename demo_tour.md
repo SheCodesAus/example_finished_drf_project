@@ -1,0 +1,2 @@
+# Demo Tour
+This doc exists to highlight some of the key patterns and techniques that are used in this demo app. Students and mentors are encouraged to browse through! If you're a mentor giving feedback on student projects, you might find it useful to link to some of the sections below.

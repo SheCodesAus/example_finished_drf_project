@@ -1,10 +1,38 @@
 # Crowdfunding Back End
 
+## Table of Contents
+- [Crowdfunding Back End](#crowdfunding-back-end)
+  - [Table of Contents](#table-of-contents)
+  - [Context](#context)
+    - [Note To Students](#note-to-students)
+  - [App Name: "Examplify"](#app-name-examplify)
+  - [Entity Relationship Diagram](#entity-relationship-diagram)
+  - [API Spec](#api-spec)
+  - [Testing](#testing)
+
+
+## Context
 This is an example completed back-end for the She Codes Plus course content. It is intended for use in project feedback, to allow mentors to demonstrate techniques and code patterns to students, without needing to write a new app every time. 
 
 It is NOT intended to be shared with students before their DRF projects are submitted, since it includes content they are expected to synthesise themselves.
 
 The deployed back-end can be found here: https://example-finished-drf-project.fly.dev/
+
+[A "tour" of some of the key concepts and patterns used in this project can be found here](./demo_tour.md)
+
+### Note To Students
+This is a relatively complex app. 
+
+The aim here is to provide an example for most/all of the patterns and use-cases that mentors might want to demonstrate to students of the DRF module, and that means we needed to pick a slightly ambitious design. 
+
+If I saw this kind of work from a student, I would surmise that one or more of the following was true:
+- They had previous programming experience
+- They had a LOT of spare time to throw into the project
+- They had busted an absolute gut and were rightly proud of their effort
+
+That means that it's perfectly fine and normal if your app is simpler or less developed than this! Remember, these projects are learning activities, not assessment activities. You're not supposed to go **IN** knowing how to ace the project; you're supposed to come **OUT** with a better understanding and an artifact that illustrates your coding journey.
+
+Feel free to use this code as an inspiration to expand on your project after you have submitted it. And if you see something here that you'd like help interpreting or applying, feel free to reach out on slack to set up a 1-1 with a mentor.
 
 ## App Name: "Examplify"
 Examplify is a crowdfunding app that allows educators to connect students in their classes with tutors who have succeeded in the class previously. 
@@ -14,7 +42,7 @@ Educators advertise upcoming exams (i.e., projects) that they need tutors for. E
 ## Entity Relationship Diagram
 ![](./readme_images/ERD.drawio.png)
 
-### API Spec
+## API Spec
 
 | URL                          | HTTP Method | Purpose                                                                                                                                                                                          | Request Body                                                                                                                                                                         | Success Response Code | Authentication/Authorisation                                                                                                                                        | Complete |
 | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -39,7 +67,9 @@ Educators advertise upcoming exams (i.e., projects) that they need tutors for. E
 > Perhaps a later iteration of this app would have a full set of CRUD endpoints for every model, but the goal of this module was to move fast and break stuff :) 
 
 ## Testing
-The following tests take each row in the API spec table, and apply one test to each requirement that is set out there. This is important to do! I found a few errors that I had made while performing these tests. I used manual testing here, but the Django/DRF docs have some information on how to perform automated testing, and that would be an impressive way to build on this project to further demonstrate your skills!
+The following tests take each row in the API spec table, and apply one test to each requirement that is set out there. This is important to do! I found a few errors that I had made while performing these tests. 
+
+I used manual testing here. That means I just went through and created a test in Insomnia for to check that the app fulfilled each stipulation in the API spec. An alternative to this is automated testing - writing code that checks each test case for you, so you don't need to click around in Insomnia every time you make a change to the app. The Django/DRF docs have some information on how to perform automated testing, and that would be an impressive way to build on this project to further demonstrate your skills!
 
 - [Automated Testing in Django](https://docs.djangoproject.com/en/5.0/topics/testing/overview/)
 - [Automated Testing in DRF](https://www.django-rest-framework.org/api-guide/testing/)
