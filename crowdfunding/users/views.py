@@ -1,14 +1,14 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
 from .models import CustomUser
 from projects.models import Exam
 from .serializers import CustomUserSerializer, CustomUserDetailSerializer
 from projects.serializers import ExamResultSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
-from rest_framework import permissions
-from projects.permissions import IsCreatorOrReadOnly
+from rest_framework import permissions, status
 
 class CustomUserList(APIView):
 
@@ -21,13 +21,18 @@ class CustomUserList(APIView):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 class CustomUserDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsCreatorOrReadOnly
     ]
     def get_object(self, pk):
         try:
@@ -44,10 +49,18 @@ class CustomUserDetail(APIView):
         student = self.get_object(pk)
 
         serializer = ExamResultSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(examinee=student)
-            return Response(serializer.data)
-        return Response(serializer.errors)
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if not serializer.validated_data["exam"].created_by == request.user:
+            raise PermissionDenied(f"You cannot record a student's grade on an exam you do not own.")
+
+        serializer.save(examinee=student)
+        return Response(serializer.data)
+        
     
 
 class CustomAuthToken(ObtainAuthToken):

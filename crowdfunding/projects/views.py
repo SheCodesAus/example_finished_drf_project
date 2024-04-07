@@ -5,7 +5,7 @@ from .models import Exam, ExamResult, TutorProject, TutorPledge
 from .serializers import ExamSerializer, TutorProjectSerializer, TutorProjectDetailSerializer, TutorPledgeSerializer
 from django.http import Http404
 from rest_framework import status, permissions
-from .permissions import IsCreatorOrReadOnly, IsPledgerOrPledgeeOrReadOnly
+from .permissions import ProjectDetailPerms, IsCreatorOrReadOnly, IsPledgerOrPledgeeOrReadOnly
 
 class ExamList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -68,7 +68,7 @@ class ProjectList(APIView):
 class ProjectDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
-        IsCreatorOrReadOnly
+        ProjectDetailPerms
     ]
 
     def get_object(self, pk):
@@ -95,6 +95,10 @@ class ProjectDetail(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
         
     def post(self, request, pk):
         project = self.get_object(pk)
@@ -105,17 +109,6 @@ class ProjectDetail(APIView):
                 serializer.errors,
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
-        if not project.is_open:
-            raise PermissionDenied(f"This class no longer requires tutors.")
-
-        relevant_results = ExamResult.objects.filter(
-            examinee=request.user, 
-            exam=project.tutor_for
-        )
-
-        if not any([result.score>project.required_grade for result in relevant_results]):
-            raise PermissionDenied(f"You need to pass this exam with a grade of at least {project.required_grade} in order to tutor for it.")
 
         serializer.save(
             pledged_to=project,

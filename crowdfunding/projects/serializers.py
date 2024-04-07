@@ -30,7 +30,7 @@ class TutorProjectDetailSerializer(TutorProjectSerializer):
     pledges = TutorPledgeSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):
-        instance.name = validated_data.get('title', instance.name)
+        instance.name = validated_data.get('name', instance.name)
         instance.description = validated_data.get('description', instance.description)
         instance.image = validated_data.get('image', instance.image)
         instance.required_grade = validated_data.get('required_grade', instance.required_grade)
