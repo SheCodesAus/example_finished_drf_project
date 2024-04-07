@@ -145,3 +145,21 @@ There's only one endpoint that will let you delete a record. You can make a DELE
 ## 3 - Useful Patterns
 
 ### 3.1 - Many-To-Many Relationships
+There is one many-to-many relationship [shown in our ERD](./README.md#entity-relationship-diagram) - the relationship between students and the exams they sit. This relationship is set up through the `ExamResult` table. Let's take a look at how this code works:
+
+1. [The `ExamResult` model is defined here.](https://github.com/SheCodesAus/example_finished_drf_project/blob/main/crowdfunding/projects/models.py#L22) Looks pretty normal - it has foreign key fields for both the person who sat the exam, and the exam that was sat. 
+   
+    > Just this is enough for an "implicit" many-to-many relationship - you could get a list of every person who sat a particular exam based on that exam's results, and you could get a list of every exam a person sat by looking at their results. Sometimes that's inconvenient though, so read on to see how it can be simplified!
+
+2. [A `ManyToManyField` called `students` is added to the `Exam` model here.](https://github.com/SheCodesAus/example_finished_drf_project/blob/main/crowdfunding/projects/models.py#L14) We specify three things:
+   - The model on the other end of the relationship is the `User` model.
+   - The table that this many-to-many relationship should be mediated "through" is the `ExamResult` table 
+   - The field on the `User` model that lets us access this relationship should be called `studied_exams`
+
+3. [A field called `studied_exams` is added to the `CustomUserDetailSerializer` here](https://github.com/SheCodesAus/example_finished_drf_project/blob/main/crowdfunding/users/serializers.py#L14). This will represent the relationship for us in our output. We use an `ExamSerializer` to represent the info in the field.
+
+And that's it! After that, we can ignore the many-to-many relationship and let Django handle it. We create views to deal with the one-to-many relationships between `Users`/`ExamResults` and `Exams`/`ExamResults`, and Django takes care of all of the figuring out required to piece together which users have sat which exams. 
+
+Here's what the output of our user details view looks like - you can see that the `User` data contains a list of exam results AND a list of the exams the user has sat:
+
+![](./readme_images/studied_exams.png)
