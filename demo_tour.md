@@ -185,7 +185,7 @@ When someone tries to create an exam with a name that is already taken, they aut
 This is scary simple - [here's an example](https://github.com/SheCodesAus/example_finished_drf_project/blob/main/crowdfunding/projects/views.py#L144). Note that because we're not returning any info, we can use the 204 response code - "NO CONTENT".
 
 ### 3.7 - Response Codes
-It can often seem like there are wayyyyy to many response codes, and you'll never be able to make sure that your endpoints always return the correct one. In fact, Django has a few helpful tools to make this easy. Here's how I make sure my response codes are correct:
+It can often seem like there are wayyyyy too many response codes, and you'll never be able to make sure that your endpoints always return the correct one. In fact, Django has a few helpful tools to make this easy. Here's how I make sure my response codes are correct:
 
 - If you don't specify a code in your `Response()` object, Django will always insert a 200_OK code. That means you never need to specify a response for successful GET, or PATCH requests!
 - Every successful POST or PUT request should give a 201_CREATED code.
