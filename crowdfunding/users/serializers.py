@@ -13,7 +13,6 @@ class CustomUserSerializer(serializers.Serializer):
     
 class CustomUserDetailSerializer(CustomUserSerializer):
     owned_exams = ExamSerializer(many=True, read_only=True)
-    studied_exams=ExamSerializer(many=True, read_only=True)
     exam_results = ExamResultSerializer(many=True, read_only=True)
     owned_projects = TutorProjectSerializer(many=True, read_only=True)
     supporter_pledges = TutorPledgeSerializer(many=True, read_only=True)
