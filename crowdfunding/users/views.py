@@ -64,7 +64,6 @@ class CustomUserDetail(APIView):
     
 
 class CustomAuthToken(ObtainAuthToken):
-    
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             data=request.data,
