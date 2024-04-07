@@ -10,6 +10,13 @@ class Exam(models.Model):
         on_delete=models.CASCADE,
         related_name='owned_exams'
     )
+
+    students = models.ManyToManyField(
+        User,
+        through='ExamResult',
+        related_name='studied_exams'
+    )
+
     created_date=models.DateTimeField(auto_now_add=True)
 
 class ExamResult(models.Model):

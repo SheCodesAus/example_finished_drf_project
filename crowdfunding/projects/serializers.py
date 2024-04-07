@@ -51,8 +51,8 @@ class ExamResultSerializer(serializers.ModelSerializer):
 class ExamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
-        fields = ['id', 'name', 'created_by', 'created_date']
-        read_only_fields = ['id', 'created_by', 'created_date']
+        fields = ['id', 'name', 'created_by', 'created_date', 'results']
+        read_only_fields = ['id', 'created_by', 'created_date', 'results']
 
     def create(self, validated_data):
         return Exam.objects.create(**validated_data)
