@@ -55,7 +55,7 @@ These records are created by making a POST request at the `/users/<int: pk>/` en
 > **Note carefully: this is a convention.** There's no hard-and-fast rule that says you MUST structure your APIs this way. It would have been perfectly reasonable to built an `/exam_results/` endpoint, and create exam result records by POSTing to it. The important rule is that you should always clearly document your endpoints in your API spec, so that other people who use your API can find the endpoints they need.
 
 #### 2.1.4 - TutorProjects
-The `TutorProject` table contains records of study classes that need people to tutor them. These records are created by making a POST request at the `/exams/` endpoint. 
+The `TutorProject` table contains records of study classes that need people to tutor them. These records are created by making a POST request at the `/exams/<int: pk>/` endpoint. 
 
 Once again, each `TutorProject` *belongs* to a specific exam, so we create them by posting to the endpoint for that individual exam! [See the note above for a detailed justification of this.](#213---examresults)
 
