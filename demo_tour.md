@@ -16,7 +16,8 @@ This doc exists to highlight some of the key patterns and techniques that are us
       - [2.2.2 - GETting Data](#222---getting-data)
       - [2.2.3 - Updating Data](#223---updating-data)
       - [2.2.4 - Deleting Records](#224---deleting-records)
-  - [3 - Model Structure of The Project](#3---model-structure-of-the-project)
+  - [3 - Useful Patterns](#3---useful-patterns)
+    - [3.1 - Many-To-Many Relationships](#31---many-to-many-relationships)
 
 ## 2 -  How To Use The Project
 Let's take a moment to look at how the project is designed to be used so we can orientate ourselves. 
@@ -141,15 +142,6 @@ There's only one endpoint that will let you delete a record. You can make a DELE
 >
 > Of course, there's nothing to say more DELETE functionality can't be added down the track!
 
-## 3 - Model Structure of The Project
-[The Entity Relationship Diagram](#entity-relationship-diagram) lays out the entity relationships for this project, but there's one thing we can look into a little deeper here, and that's the nature of the relationships between models.
+## 3 - Useful Patterns
 
-All of the relationships that are explicitly depicted in the ERD are "one-to-many" relationships. Each `User` can create multiple `Exam`s. Each `User` can receive multiple `ExamResult`s. Each `TutorProject` can receive multiple `TutorPledge`s, etc. Does that mean that there aren't any other types of relationship here?
-
-Actually, no! There are some **implicit** relationships between these entities that it's worth considering. Ask yourself: what is the nature of the relationship between students and exams?
-
-Each student can sit multiple exams, and each exam is sat by multiple students. That means there is a **"many-to-many"** relationship here! Our `ExamResult` table is actually a "through-table" that mediates the relationship between users and the exams they take. 
-
-(In fact there's one more implicit many-to-many relationship in this demo - tutors have a many-to-many relationship with the projects they pledge to, mediated by the `TutorPledge` table.)
-
-We've inserted an example of how you might use this many-to-many relationship into the demo. 
+### 3.1 - Many-To-Many Relationships
